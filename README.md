@@ -130,4 +130,28 @@ public class Main{
         
     }
 }
+                                                 
+ /*无重复字符的最长子串
+    * 给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度。
+    * 输入: s = "abcabcbb", 输入："BBBBBBB"
+      输出: 3,              输出：1  
+      解释: 因为无重复字符的最长子串是 "abc"，所以其长度为 3。
+    * */
+    private static void lengthOfLongestSubstring(){
+    Scanner scan = new Scanner(System.in);
+        String longStr = scan.nextLine();
+        int length = longStr.length();
+        int maxLength = 0;
+        int startIndex = 0;
+        HashMap<Character, Integer> map = new HashMap<>();
+        for (int i = 0; i < length; i++) {
+            char ch = longStr.charAt(i);
+            if (map.containsKey(ch)){
+                startIndex = Math.max(map.get(ch) + 1,startIndex);
+            }
+            maxLength = Math.max(maxLength,i - startIndex + 1);
+            map.put(ch,i);
+        }
+        System.out.println(maxLength);
+    }
 
