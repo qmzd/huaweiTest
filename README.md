@@ -34,12 +34,6 @@ import java.util.Scanner;
     
 import java.util.Scanner;
 
-/**
- * @author Mr_zhao - 过河卒
- * @create 2021/7/4 15:15
- * @day 星期日
- */
-public class FoundCount {
 /*
     写出一个程序，接受一个由字母、数字和空格组成的字符串，和一个字母，
     然后输出输入字符串中该字母的出现次数。不区分大小写，字符串长度小于500。*/
@@ -109,73 +103,73 @@ public class FoundCount {
 300
 400
 
-import java.util.Scanner;
-import java.util.Set;
-import java.util.TreeSet;
+    import java.util.Scanner;
+    import java.util.Set;
+    import java.util.TreeSet;
 
-public class Main{
-    public static void main(String[] args){
-        Scanner scan = new Scanner(System.in);
-        while(scan.hasNext()){
-            int size = scan.nextInt();
-            Set<Integer> tree = new TreeSet<>();
-            for(int i = 0; i < size ; i++){
-                tree.add(scan.nextInt());
+    public class Main{
+        public static void main(String[] args){
+            Scanner scan = new Scanner(System.in);
+            while(scan.hasNext()){
+                int size = scan.nextInt();
+                Set<Integer> tree = new TreeSet<>();
+                for(int i = 0; i < size ; i++){
+                    tree.add(scan.nextInt());
+                }
+                for(Integer num : tree){
+                    System.out.println(num);
+                }
             }
-            for(Integer num : tree){
-                System.out.println(num);
-            }
+
+
         }
-        
-        
     }
-}
                                                  
- /*无重复字符的最长子串
-    * 给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度。
-    * 输入: s = "abcabcbb", 输入："BBBBBBB"
-      输出: 3,              输出：1  
-      解释: 因为无重复字符的最长子串是 "abc"，所以其长度为 3。
-    * */
-    private static void lengthOfLongestSubstring(){
-    Scanner scan = new Scanner(System.in);
-        String longStr = scan.nextLine();
-        int length = longStr.length();
-        int maxLength = 0;
-        int startIndex = 0;
-        HashMap<Character, Integer> map = new HashMap<>();
-        for (int i = 0; i < length; i++) {
-            char ch = longStr.charAt(i);
-            if (map.containsKey(ch)){
-                startIndex = Math.max(map.get(ch) + 1,startIndex);
+     /*无重复字符的最长子串
+        * 给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度。
+        * 输入: s = "abcabcbb", 输入："BBBBBBB"
+          输出: 3,              输出：1  
+          解释: 因为无重复字符的最长子串是 "abc"，所以其长度为 3。
+        * */
+        private static void lengthOfLongestSubstring(){
+        Scanner scan = new Scanner(System.in);
+            String longStr = scan.nextLine();
+            int length = longStr.length();
+            int maxLength = 0;
+            int startIndex = 0;
+            HashMap<Character, Integer> map = new HashMap<>();
+            for (int i = 0; i < length; i++) {
+                char ch = longStr.charAt(i);
+                if (map.containsKey(ch)){
+                    startIndex = Math.max(map.get(ch) + 1,startIndex);
+                }
+                maxLength = Math.max(maxLength,i - startIndex + 1);
+                map.put(ch,i);
             }
-            maxLength = Math.max(maxLength,i - startIndex + 1);
-            map.put(ch,i);
+            System.out.println(maxLength);
         }
-        System.out.println(maxLength);
-    }
                                                               
   /*  连续输入字符串，请按长度为8拆分每个字符串后输出到新的字符串数组；
 •长度不是8整数倍的字符串请在后面补数字0，空字符串不处理。*/
-public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        while (scanner.hasNext()){
-            String str = scanner.nextLine();
-            StringBuffer buffer = new StringBuffer();
-            buffer.append(str);
-            int length = str.length();
-            int addZero = 8 - length % 8;
-            while (addZero > 0 && addZero < 8){
-                buffer.append(0);
-                addZero--;
-            }
-            String s = buffer.toString();
-            while (s.length() > 0){
-                System.out.println(s.substring(0,8));
-                 s = s.substring(8);
+    public static void main(String[] args) {
+            Scanner scanner = new Scanner(System.in);
+            while (scanner.hasNext()){
+                String str = scanner.nextLine();
+                StringBuffer buffer = new StringBuffer();
+                buffer.append(str);
+                int length = str.length();
+                int addZero = 8 - length % 8;
+                while (addZero > 0 && addZero < 8){
+                    buffer.append(0);
+                    addZero--;
+                }
+                String s = buffer.toString();
+                while (s.length() > 0){
+                    System.out.println(s.substring(0,8));
+                     s = s.substring(8);
+                }
             }
         }
-    }
     
     给你一个 32 位的有符号整数 x ，返回将 x 中的数字部分反转后的结果。
 
