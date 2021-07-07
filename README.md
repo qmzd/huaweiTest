@@ -151,25 +151,26 @@ import java.util.Scanner;
                                                               
   /*  连续输入字符串，请按长度为8拆分每个字符串后输出到新的字符串数组；
 •长度不是8整数倍的字符串请在后面补数字0，空字符串不处理。*/
-    public static void main(String[] args) {
-            Scanner scanner = new Scanner(System.in);
-            while (scanner.hasNext()){
-                String str = scanner.nextLine();
-                StringBuffer buffer = new StringBuffer();
-                buffer.append(str);
-                int length = str.length();
-                int addZero = 8 - length % 8;
-                while (addZero > 0 && addZero < 8){
-                    buffer.append(0);
-                    addZero--;
-                }
-                String s = buffer.toString();
-                while (s.length() > 0){
-                    System.out.println(s.substring(0,8));
-                     s = s.substring(8);
+
+        public static void main(String[] args) {
+                Scanner scanner = new Scanner(System.in);
+                while (scanner.hasNext()){
+                    String str = scanner.nextLine();
+                    StringBuffer buffer = new StringBuffer();
+                    buffer.append(str);
+                    int length = str.length();
+                    int addZero = 8 - length % 8;
+                    while (addZero > 0 && addZero < 8){
+                        buffer.append(0);
+                        addZero--;
+                    }
+                    String s = buffer.toString();
+                    while (s.length() > 0){
+                        System.out.println(s.substring(0,8));
+                         s = s.substring(8);
+                    }
                 }
             }
-        }
     
     给你一个 32 位的有符号整数 x ，返回将 x 中的数字部分反转后的结果。
 
