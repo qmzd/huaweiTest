@@ -147,8 +147,7 @@ import java.util.Scanner;
                                                               
  05. /*  连续输入字符串，请按长度为8拆分每个字符串后输出到新的字符串数组；
   •长度不是8整数倍的字符串请在后面补数字0，空字符串不处理。*/
-
-
+  
         public static void main(String[] args) {
                 Scanner scanner = new Scanner(System.in);
                 while (scanner.hasNext()){
@@ -168,6 +167,7 @@ import java.util.Scanner;
                     }
                 }
             }
+    
     
 06. 给你一个 32 位的有符号整数 x ，返回将 x 中的数字部分反转后的结果。
 如果反转后整数超过 32 位的有符号整数的范围 [−231,  231 − 1] ，就返回 0。
