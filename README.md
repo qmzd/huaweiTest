@@ -32,12 +32,7 @@ import java.util.Scanner;
 02  写出一个程序，接受一个由字母、数字和空格组成的字符串，和一个字母，
     然后输出输入字符串中该字母的出现次数。不区分大小写，字符串长度小于500。
     
-import java.util.Scanner;
-
-/*
-    写出一个程序，接受一个由字母、数字和空格组成的字符串，和一个字母，
-    然后输出输入字符串中该字母的出现次数。不区分大小写，字符串长度小于500。*/
-
+    import java.util.Scanner;
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
         String str1 = scan.nextLine();
@@ -125,12 +120,13 @@ import java.util.Scanner;
         }
     }
                                                  
-     /*无重复字符的最长子串
+04 /*无重复字符的最长子串
         * 给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度。
         * 输入: s = "abcabcbb", 输入："BBBBBBB"
           输出: 3,              输出：1  
           解释: 因为无重复字符的最长子串是 "abc"，所以其长度为 3。
         * */
+        
         private static void lengthOfLongestSubstring(){
         Scanner scan = new Scanner(System.in);
             String longStr = scan.nextLine();
@@ -149,8 +145,8 @@ import java.util.Scanner;
             System.out.println(maxLength);
         }
                                                               
-  /*  连续输入字符串，请按长度为8拆分每个字符串后输出到新的字符串数组；
-•长度不是8整数倍的字符串请在后面补数字0，空字符串不处理。*/
+ 05. /*  连续输入字符串，请按长度为8拆分每个字符串后输出到新的字符串数组；
+  •长度不是8整数倍的字符串请在后面补数字0，空字符串不处理。*/
 
         public static void main(String[] args) {
                 Scanner scanner = new Scanner(System.in);
@@ -172,8 +168,7 @@ import java.util.Scanner;
                 }
             }
     
-    给你一个 32 位的有符号整数 x ，返回将 x 中的数字部分反转后的结果。
-
+06. 给你一个 32 位的有符号整数 x ，返回将 x 中的数字部分反转后的结果。
 如果反转后整数超过 32 位的有符号整数的范围 [−231,  231 − 1] ，就返回 0。
     输入：x = 123 ； -123 ；  120 
     输出：321     ； -321 ；  21
@@ -191,7 +186,7 @@ import java.util.Scanner;
         return rev;
     }
                                                               
-给你一个整数 x ，如果 x 是一个回文整数，返回 true ；否则，返回 false 。
+07.给你一个整数 x ，如果 x 是一个回文整数，返回 true ；否则，返回 false 。
 
 回文数是指正序（从左向右）和倒序（从右向左）读都是一样的整数。例如，121 是回文，而 123 不是。 -121 不是；
 
