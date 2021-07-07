@@ -210,3 +210,43 @@ import java.util.Scanner;
         }
         return false;
     }
+    
+8.0 /* 给定一个罗马数字，转为整数，范围在 1 - 3399
+     * 罗马数字包含以下七种字符: I， V， X， L，C，D 和 M
+     * 通常情况下，罗马数字中小的数字在大的数字的右边。但也存在特例，
+     * 例如 4 不写做IIII，而是IV。数字 1 在数字 5 的左边，所表示的数等于大数 5 减小数 1 得到的数值 4 。
+     * 同样地，数字 9 表示为IX。这个特殊的规则只适用于以下六种情况：
+     * I可以放在V(5) 和X(10) 的左边，来表示 4 和 9。
+       X可以放在L(50) 和C(100) 的左边，来表示 40 和90。
+       C可以放在D(500) 和M(1000) 的左边，来表示400 和900。
+     *  XXVII = 27
+     * */
+     
+        解题思路：若左边的值大于右边则结果值 = 从左到右连续相加；
+             若左边的值小于右边的值则将左边的值取反后。从左右到连续相加；
+    
+        private static int romanToInt(String s) {
+            HashMap<Character, Integer> map = new HashMap<Character, Integer>() {
+                {
+                    put('I', 1);
+                    put('V', 5);
+                    put('X', 10);
+                    put('L', 50);
+                    put('C', 100);
+                    put('D', 500);
+                    put('M', 1000);
+                }
+            };
+            int length = s.length();
+            int sum = 0;
+            for (int i = 0; i < length; i++) {
+                // 当前罗马数字代表的数；
+                Integer code = map.get(s.charAt(i));
+                if (i < length-1 && code < map.get(s.charAt(i+1))){
+                    sum -= code;
+                }else {
+                    sum += code;
+                }
+            }
+            return sum;
+        }
