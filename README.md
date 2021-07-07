@@ -148,6 +148,7 @@ import java.util.Scanner;
  05. /*  连续输入字符串，请按长度为8拆分每个字符串后输出到新的字符串数组；
   •长度不是8整数倍的字符串请在后面补数字0，空字符串不处理。*/
 
+
         public static void main(String[] args) {
                 Scanner scanner = new Scanner(System.in);
                 while (scanner.hasNext()){
@@ -173,18 +174,18 @@ import java.util.Scanner;
     输入：x = 123 ； -123 ；  120 
     输出：321     ； -321 ；  21
     
-     private static int reverse(int x){
-        int rev = 0;
-        while (x != 0) {
-            if (rev < Integer.MIN_VALUE / 10 || rev > Integer.MAX_VALUE / 10) {
-                return 0;
+         private static int reverse(int x){
+            int rev = 0;
+            while (x != 0) {
+                if (rev < Integer.MIN_VALUE / 10 || rev > Integer.MAX_VALUE / 10) {
+                    return 0;
+                }
+                int digit = x % 10;
+                x /= 10;
+                rev = rev * 10 + digit;
             }
-            int digit = x % 10;
-            x /= 10;
-            rev = rev * 10 + digit;
+            return rev;
         }
-        return rev;
-    }
                                                               
 07.给你一个整数 x ，如果 x 是一个回文整数，返回 true ；否则，返回 false 。
 
