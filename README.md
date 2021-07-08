@@ -250,3 +250,27 @@ import java.util.Scanner;
             }
             return sum;
         }
+    
+9.0 /* 数字转罗马数字；
+    解题思路：罗马数字总共是7个字符，再加上特殊情况的6个字符总共是13个字符；
+            所以，转换时只需每次从左向右取最大罗马字符拼接即可；*/
+            
+        private static String intToRoman(int number) {
+            int[] values = {1000,900,500,400,100,90,50,40,10,9,5,4,1};
+            String[] ramoFormat = {"M","CM","D","DM","C","XC","L","XL","X","IX","V","IV","I"};
+
+            StringBuffer roman = new StringBuffer();
+            int length = values.length;
+            for (int i = 0; i < length; i++) {
+                int value = values[i];
+                while (number >= value){
+                    number -= value;
+                    roman.append(ramoFormat[i]);
+
+                }
+                if (number == 0){
+                    break;
+                }
+            }
+            return roman.toString();
+        }
