@@ -274,3 +274,67 @@ import java.util.Scanner;
             }
             return roman.toString();
         }
+        
+10.  /* 编写一个函数来查找字符串数组中的最长公共前缀。
+    如果不存在公共前缀，返回空字符串 ""。*/
+
+        private static String getLongestPrefix(String[] args) {
+            int length = args.length;
+            String strOne = args[0];
+            for (int i = 1; i < length; i++) {
+                strOne = longestCommonPrefix(strOne, args[i]);
+                if (strOne.length() == 0){
+                    return "";
+                }
+            }
+            return strOne;
+        }
+
+        private static String longestCommonPrefix(String strOne, String arg) {
+            int size = Math.min(strOne.length(), arg.length());
+            int index = 0;
+            while (index < size && arg.charAt(index) == strOne.charAt(index)) {
+                index++;
+            }
+            return strOne.substring(0,index);
+        }
+
+   // 纵向扫描
+   
+        private static String getLongestCommonPrefix(String[] args){
+            String arg = args[0];
+            int length = arg.length();
+            int count = args.length;
+            for (int i = 0; i < length; i++) {
+                char ch = arg.charAt(i);
+                for (int j = 1; j < count; j++) {
+                    if (i == args[j].length() || args[j].charAt(i) != ch){
+                        return arg.substring(0,i);
+                    }
+                }
+            }
+           return "";
+        }        
+11.0  // 给你一个包含 n 个整数的数组nums，判断nums中是否存在三个元素 a，b，c ，使得a + b + c = 0
+    // 请你找出所有和为 0 且不重复的三元组。
+    
+        private static List<List<Integer>> threeNum(int[] nums){
+            int length = nums.length;
+            ArrayList<List<Integer>> arrayList = new ArrayList<>();
+            for (int i = 0; i < length; i++) {
+
+                for (int j = 1; j < length; j++) {
+                   if (j < length-1 && nums[i] + nums[j] + nums[j+1] == 0){
+                       ArrayList<Integer> list = new ArrayList<>();
+                       list.add(nums[i]);
+                       list.add(nums[j]);
+                       list.add(nums[j+1]);
+                       Collections.sort(list);
+                       if (!arrayList.contains(list)){
+                           arrayList.add(list);
+                       }
+                   }
+                }
+            }
+            return arrayList;
+        }
