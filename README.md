@@ -396,3 +396,54 @@ import java.util.Scanner;
             }
             return stack.isEmpty();
         }
+13. /**
+     * 最接近的三个数之和；
+     * 给定一个包括n 个整数的数组nums和 一个目标值target。
+     * 找出nums中的三个整数，使得它们的和与target最接近。返回这三个数的和。
+     * 假定每组输入只存在唯一答案。
+     *
+     * 解题思路： 排序+双指针
+     * @return int
+     */
+     
+        private static int threeSumClosest(int[] nums, int target){
+            int length = nums.length;
+            Arrays.sort(nums);
+
+            if (nums == null || length == 0 || length < 3){
+                return 100000;
+            }
+
+            int min = Integer.MAX_VALUE;
+            int res = 0;
+
+            for (int i = 0; i < length - 2; i++) {
+                // 跳过重复的数
+                if (i > 0 && nums[i] == nums[i+1]){
+                    continue;
+                }
+                // 定义双指针
+                int left = i+1;
+                int right = length - 1;
+
+                while (left < right){
+                   int sum =  nums[i]+nums[left]+nums[right];
+                    if (sum == target){
+                        return target;
+                    }
+
+                    int abs = Math.abs(sum - target);
+                    if (abs < min){
+                        min = abs;
+                        res = sum;
+                    }
+
+                    if (sum > target){
+                        right--;
+                    }else {
+                        left++;
+                    }
+                }
+            }
+            return res;
+        }
