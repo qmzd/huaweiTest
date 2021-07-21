@@ -319,7 +319,8 @@ import java.util.Scanner;
         }        
 11.0  // 给你一个包含 n 个整数的数组nums，判断nums中是否存在三个元素 a，b，c ，使得a + b + c = 0
     // 请你找出所有和为 0 且不重复的三元组。 
-    解题思路： 排序+双指针
+    
+   解题思路： 排序+双指针
     
         private static List<List<Integer>> threeNum(int[] nums){
              int length = nums.length;
@@ -462,65 +463,66 @@ import java.util.Scanner;
      * @return 和为目标值的集合
      */
      
-        private static List<List<Integer>> fourSum(int[] nums, int target){
-            List<List<Integer>> result = new ArrayList<>();
-            int length = nums.length;
-            if (nums == null || length < 4){
-                return result;
-            }
-            // 排序
-            Arrays.sort(nums);
-            for (int i = 0; i < length - 3; i++) {
-                if (i > 0 && nums[i] == nums[ i - 1]){
-                    continue;
+     
+            private static List<List<Integer>> fourSum(int[] nums, int target){
+                List<List<Integer>> result = new ArrayList<>();
+                int length = nums.length;
+                if (nums == null || length < 4){
+                    return result;
                 }
-                // 排序后数组的最小的前四个数之和都大于目标数，所以无论后面加哪个都会大于目标数，所以直接跳出，
-                if (nums[i] + nums[i + 1] + nums[i + 2] + nums[i + 3] > target){
-                    break;
-                }
-                // 排序后数组的最大的后三个数之和小于目标数，则无需再计算，直接进行下次循环；
-                if (nums[i] + nums[length - 3] + nums[length - 2] + nums[length - 1] < target){
-                    continue;
-                }
-
-                for (int j = i+1; j < length - 2; j++) {
-
-                    if (j > i+1 && nums[j] == nums[j - 1]){
+                // 排序
+                Arrays.sort(nums);
+                for (int i = 0; i < length - 3; i++) {
+                    if (i > 0 && nums[i] == nums[ i - 1]){
                         continue;
                     }
-                    if (nums[i] + nums[j] + nums[j+1] + nums[j + 2] > target){
+                    // 排序后数组的最小的前四个数之和都大于目标数，所以无论后面加哪个都会大于目标数，所以直接跳出，
+                    if (nums[i] + nums[i + 1] + nums[i + 2] + nums[i + 3] > target){
                         break;
                     }
-                    if (nums[i] + nums[j] + nums[length - 2] + nums[length - 1] < target){
+                    // 排序后数组的最大的后三个数之和小于目标数，则无需再计算，直接进行下次循环；
+                    if (nums[i] + nums[length - 3] + nums[length - 2] + nums[length - 1] < target){
                         continue;
                     }
 
-                    // 定义双指针
-                    int left = j + 1;
-                    int right = length - 1;
-                    while (left < right){
-                        if (nums[i] + nums[j] + nums[left] + nums[right] < target){
-                            left++;
-                        }else if (nums[i] + nums[j] + nums[left] + nums[right] > target){
-                            right--;
-                        }else {
-                            List<Integer> list = new ArrayList<>();
-                            list.add(nums[i]);
-                            list.add(nums[j]);
-                            list.add(nums[left]);
-                            list.add(nums[right]);
-                            result.add(list);
-                            while (left < right && nums[left] == nums[left+1]){
+                    for (int j = i+1; j < length - 2; j++) {
+
+                        if (j > i+1 && nums[j] == nums[j - 1]){
+                            continue;
+                        }
+                        if (nums[i] + nums[j] + nums[j+1] + nums[j + 2] > target){
+                            break;
+                        }
+                        if (nums[i] + nums[j] + nums[length - 2] + nums[length - 1] < target){
+                            continue;
+                        }
+
+                        // 定义双指针
+                        int left = j + 1;
+                        int right = length - 1;
+                        while (left < right){
+                            if (nums[i] + nums[j] + nums[left] + nums[right] < target){
                                 left++;
-                            }
-                            while (left < right && nums[right] == nums[right-1]){
+                            }else if (nums[i] + nums[j] + nums[left] + nums[right] > target){
+                                right--;
+                            }else {
+                                List<Integer> list = new ArrayList<>();
+                                list.add(nums[i]);
+                                list.add(nums[j]);
+                                list.add(nums[left]);
+                                list.add(nums[right]);
+                                result.add(list);
+                                while (left < right && nums[left] == nums[left+1]){
+                                    left++;
+                                }
+                                while (left < right && nums[right] == nums[right-1]){
+                                    right--;
+                                }
+                                left++;
                                 right--;
                             }
-                            left++;
-                            right--;
                         }
                     }
                 }
+                return result;
             }
-            return result;
-        }
