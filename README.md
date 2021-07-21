@@ -449,4 +449,78 @@ import java.util.Scanner;
                 }
                 return res;
             }
-14.
+            
+14./**
+     * 四数之和
+     *给定一个包含n 个整数的数组nums和一个目标值target，
+     * 判断nums中是否存在四个元素 a，b，c和 d，
+     * 使得a + b + c + d的值与target相等？找出所有满足条件且不重复的四元组。
+     *
+     * 解题思路：排序 + 双指针；
+     * @param nums 任意数组
+     * @param target 目标值
+     * @return 和为目标值的集合
+     */
+     
+        private static List<List<Integer>> fourSum(int[] nums, int target){
+            List<List<Integer>> result = new ArrayList<>();
+            int length = nums.length;
+            if (nums == null || length < 4){
+                return result;
+            }
+            // 排序
+            Arrays.sort(nums);
+            for (int i = 0; i < length - 3; i++) {
+                if (i > 0 && nums[i] == nums[ i - 1]){
+                    continue;
+                }
+                // 排序后数组的最小的前四个数之和都大于目标数，所以无论后面加哪个都会大于目标数，所以直接跳出，
+                if (nums[i] + nums[i + 1] + nums[i + 2] + nums[i + 3] > target){
+                    break;
+                }
+                // 排序后数组的最大的后三个数之和小于目标数，则无需再计算，直接进行下次循环；
+                if (nums[i] + nums[length - 3] + nums[length - 2] + nums[length - 1] < target){
+                    continue;
+                }
+
+                for (int j = i+1; j < length - 2; j++) {
+
+                    if (j > i+1 && nums[j] == nums[j - 1]){
+                        continue;
+                    }
+                    if (nums[i] + nums[j] + nums[j+1] + nums[j + 2] > target){
+                        break;
+                    }
+                    if (nums[i] + nums[j] + nums[length - 2] + nums[length - 1] < target){
+                        continue;
+                    }
+
+                    // 定义双指针
+                    int left = j + 1;
+                    int right = length - 1;
+                    while (left < right){
+                        if (nums[i] + nums[j] + nums[left] + nums[right] < target){
+                            left++;
+                        }else if (nums[i] + nums[j] + nums[left] + nums[right] > target){
+                            right--;
+                        }else {
+                            List<Integer> list = new ArrayList<>();
+                            list.add(nums[i]);
+                            list.add(nums[j]);
+                            list.add(nums[left]);
+                            list.add(nums[right]);
+                            result.add(list);
+                            while (left < right && nums[left] == nums[left+1]){
+                                left++;
+                            }
+                            while (left < right && nums[right] == nums[right-1]){
+                                right--;
+                            }
+                            left++;
+                            right--;
+                        }
+                    }
+                }
+            }
+            return result;
+        }
