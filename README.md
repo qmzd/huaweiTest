@@ -406,44 +406,46 @@ import java.util.Scanner;
      * @return int
      */
      
-        private static int threeSumClosest(int[] nums, int target){
-            int length = nums.length;
-            Arrays.sort(nums);
+     
+            private static int threeSumClosest(int[] nums, int target){
+                int length = nums.length;
+                Arrays.sort(nums);
 
-            if (nums == null || length == 0 || length < 3){
-                return 100000;
-            }
-
-            int min = Integer.MAX_VALUE;
-            int res = 0;
-
-            for (int i = 0; i < length - 2; i++) {
-                // 跳过重复的数
-                if (i > 0 && nums[i] == nums[i+1]){
-                    continue;
+                if (nums == null || length == 0 || length < 3){
+                    return 100000;
                 }
-                // 定义双指针
-                int left = i+1;
-                int right = length - 1;
 
-                while (left < right){
-                   int sum =  nums[i]+nums[left]+nums[right];
-                    if (sum == target){
-                        return target;
+                int min = Integer.MAX_VALUE;
+                int res = 0;
+
+                for (int i = 0; i < length - 2; i++) {
+                    // 跳过重复的数
+                    if (i > 0 && nums[i] == nums[i+1]){
+                        continue;
                     }
+                    // 定义双指针
+                    int left = i+1;
+                    int right = length - 1;
 
-                    int abs = Math.abs(sum - target);
-                    if (abs < min){
-                        min = abs;
-                        res = sum;
-                    }
+                    while (left < right){
+                       int sum =  nums[i]+nums[left]+nums[right];
+                        if (sum == target){
+                            return target;
+                        }
 
-                    if (sum > target){
-                        right--;
-                    }else {
-                        left++;
+                        int abs = Math.abs(sum - target);
+                        if (abs < min){
+                            min = abs;
+                            res = sum;
+                        }
+
+                        if (sum > target){
+                            right--;
+                        }else {
+                            left++;
+                        }
                     }
                 }
+                return res;
             }
-            return res;
-        }
+14.
