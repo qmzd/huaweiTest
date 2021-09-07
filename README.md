@@ -144,6 +144,58 @@ import java.util.Scanner;
             }
             System.out.println(maxLength);
         }
+        
+        
+ 最长回文串：
+      
+            // 回文串
+                public static String longestPalindrome(String s) {
+                    if (s == null || s.length() < 1) {
+                        return "";
+                    }
+                    int start = 0, end = 0;
+                    for (int i = 0; i < s.length(); i++) {
+                        // 奇数中点
+                        // 以i作为回文子串的中心，向两边扩散得到的回文子串的长度
+                        int oddPoint = expandAroundCenter(s, i, i);
+                        // 偶数中点
+                        // 以i 和 i+1作为回文子串的中心，向两边扩散得到的回文子串的长度
+                        int evenPoint = expandAroundCenter(s, i, i + 1);
+                        // 回文串的最大长度
+                        int len = Math.max(oddPoint, evenPoint);
+
+                        // 计算回文串的起止索引
+                            // 根据i和maxLen算begin下标
+                                       // 奇数：i-maxLen/2
+                                       // 偶数：i-maxLen/2+1
+                        // 统一：i-(maxLen-1)/2
+                        if (len > end - start) {
+                            start = i - (len - 1) / 2;
+                            end = start + len - 1;
+                        }
+                    }
+                    // end+1 是因为java的左闭右开的原则；
+                    return s.substring(start, end + 1);
+                }
+      
+      
+               /**
+             * 返回回文子串的长度
+             * @param s 字符串
+             * @param left 左边界
+             * @param right 右边界
+             * @return 回文串的长度
+             */
+            public static int expandAroundCenter(String s, int left, int right) {
+                // 由中间向两边扩散的判断，若相等则左下标向左一位，右下标向右一位；
+                while (left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
+                    --left;
+                    ++right;
+                }
+                // 回文串的长度为:
+                return right - left - 1;
+            }
+      
                                                               
  05.  连续输入字符串，请按长度为8拆分每个字符串后输出到新的字符串数组；
         •长度不是8整数倍的字符串请在后面补数字0，空字符串不处理。*/
