@@ -677,3 +677,142 @@ import java.util.Scanner;
             }
             return slow;
         }
+18  * 功能描述
+ * 给定两个整数，被除数dividend和除数divisor。将两数相除，要求不使用乘法、除法和 mod 运算符。
+ * 返回被除数dividend除以除数divisor得到的商。
+
+           /**
+             * 除法
+             *
+             * @param devidend 被除数
+             * @param devisor 除数
+             * @return 结果
+             */
+            private static int devide(int devidend, int devisor){
+
+                if (devisor == 0){
+                    return devidend;
+                }
+
+                if (devidend == Integer.MIN_VALUE && devisor == -1){
+                    return Integer.MAX_VALUE;
+                }
+                int res = 0;
+                int devidend2 = Math.abs(devidend);
+                int devisor2 = Math.abs(devisor);
+                res = call(devidend2, devisor2, res);
+                if ((devidend < 0 && devisor > 0) || (devidend > 0 && devisor < 0)){
+                    res = -res;
+                }
+                return res;
+            }
+
+            private static int call(int devidend, int devisor,int res){
+                while (devidend - devisor > 0){
+                    devidend  -= devisor;
+                    res++;
+                }
+                return res;
+            }
+19  * 功能描述: 获取下一个更大的排列
+ *
+ * 实现获取 下一个排列 的函数，算法需要将给定数字序列重新排列成字典序中下一个更大的排列（即，组合出下一个更大的整数）。
+ * 如果不存在下一个更大的排列，则将数字重新排列成最小的排列（即升序排列）。
+ * 必须 原地 修改，只允许使用额外常数空间。
+
+ * 思路及解法
+ * 注意到下一个排列总是比当前排列要大，除非该排列已经是最大的排列。我们希望找到一种方法，能够找到一个大于当前序列的新序列，且变大的幅度尽可能小。具体地：
+ * 我们需要将一个左边的「较小数」与一个右边的「较大数」交换，以能够让当前排列变大，从而得到下一个排列。
+ * 同时我们要让这个「较小数」尽量靠右，而「较大数」尽可能小。当交换完成后，「较大数」右边的数需要按照升序重新排列。这样可以在保证新排列大于原来排列的情况下，使变大的幅度尽可能小。
+ *
+ * [4,5,2,6,3,1] 为例； 左边的较小数是：2，右边的较大数是：3 ；满足「较小数」尽量靠右，而「较大数」尽可能小。
+ * 当我们完成交换后排列变为 [4,5,3,6,2,1]，此时我们可以重排「较小数」右边的序列，序列变为 [4,5,3,1,2,6]。
+
+        public static void main(String[] args) {
+                int[] nums = {4,5,2,6,3,7,4,1};
+                int[] ints = nextPermutation(nums);
+                System.out.println(Arrays.toString(ints));
+            }
+
+            private static int[] nextPermutation(int[] nums) {
+                int i = nums.length - 2;
+                // 1.从后向前查找第一个顺序对（i,i+1）,满足nums[i] < nums[i+1],这样“较小数”为nums[i],此时[i+1,n]必然是降序的
+                while (i >= 0 && nums[i] >= nums[i + 1]) {
+                    i--;
+                }
+                // 2.若找到顺序队，那么在区间[i+1,n)中从后向前查找第一个元素j满足a[i] < a[j].这样“较大数”即为：a[j];
+                if(i >= 0){
+                    int j = nums.length - 1;
+                    while (j>=0 && nums[i] >= nums[j]){
+                        j--;
+                    }
+                    // 3.交换nums[i] 和 nums[j]的值，此时[i+1,n)比为降序，我们通过双指针将其转为升序即可；
+                    swap(nums,i,j);
+                }
+                reverse(nums,i+1);
+                return nums;
+            }
+
+            /**
+             * 交换
+             *
+             * @param nums 数组
+             * @param i 索引位置
+             * @param j 索引位置
+             */
+            private static void swap(int[] nums, int i , int j){
+                int temp = nums[i];
+                nums[i] = nums[j];
+                nums[j] = temp;
+            }
+
+            /**
+             * 位置反转
+             *
+             * @param nums 数组
+             * @param start 开始位置
+             */
+            private static void reverse(int[] nums, int start){
+                int left = start;
+                int right = nums.length - 1;
+                while (left < right){
+                    swap(nums,left,right);
+                    left++;
+                    right--;
+                }
+            }
+20 功能描述 实现strStr()
+ * 给你两个字符串haystack 和 needle ，请你在 haystack 字符串中找出 needle 字符串出现的第一个位置（下标从 0 开始）。如果不存在，则返回 -1
+ *当needle是空字符串时，我们应当返回什么值呢？这是一个在面试中很好的问题。
+ * 对于本题而言，当needle是空字符串时我们应当返回 0 。这与 C 语言的strstr()以及 Java 的indexOf()定义相符。
+ 
+          public static void main(String[] args) {
+                String haystack = "";
+                String needle = "";
+                int i = strStr(haystack, needle);
+                System.out.println(i);
+            }
+
+            private static int strStr(String haystack,String needle){
+                int longLen = haystack.length();
+                int shortLen = needle.length();
+
+                if (longLen < shortLen){
+                    return -1;
+                }
+                if (longLen == 0 || shortLen == 0){
+                    return 0;
+                }
+                for (int i = 0; i < shortLen; i++) {
+                    for (int j = 0; j < longLen - shortLen; j++) {
+                        if (needle.charAt(i) != haystack.charAt(j)) {
+                            continue;
+                        }
+                        if (haystack.substring(j,j+shortLen).equals(needle)){
+                            return j;
+                        }
+                    }
+                }
+
+                return -1;
+            }
