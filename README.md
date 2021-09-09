@@ -816,3 +816,33 @@ import java.util.Scanner;
 
                 return -1;
             }
+21 功能描述 给你一个只包含 '(' 和 ')' 的字符串，找出最长有效（格式正确且连续）括号子串的长度。
+ * 输入：s = "(()"
+ * 输出：2
+ * 解释：最长有效括号子串是 "()"
+ *
+ * 输入：s = ")()())"
+ * 输出：4
+ * 解释：最长有效括号子串是 "()()"
+
+ * 输入：s = ""
+ * 输出：0
+
+        private static int longestValidParentheses(String str){
+                int length = str.length();
+                if (length == 0){
+                    return 0;
+                }
+                int res = 0;
+                Deque<String> stack = new LinkedList<>();
+                for (int i = 0; i < length; i++) {
+                    if (str.charAt(i) == '('){
+                        stack.push("(");
+                    }else if(!stack.isEmpty() && str.charAt(i) == ')'){
+                        stack.pop();
+                        res += 2;
+                    }
+                }
+                return res;
+
+            }
