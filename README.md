@@ -578,3 +578,43 @@ import java.util.Scanner;
                 }
                 return result;
             }
+15 生成有效括号的组合
+    数字 n 代表生成括号的对数，请你设计一个函数，用于能够生成所有可能的并且 有效的 括号组合。
+  * 有效括号组合需满足：左括号必须以正确的顺序闭合。
+  * 思路：递归
+  
+          private static List<String> generateParenthesis(int n){
+                List<String> res = new ArrayList<>();
+                if (n <= 0){
+                    return res;
+                }
+                getParenthesis("",n,n,res);
+                return res;
+            }
+
+         /**
+         * 获取括号
+         *
+         * @param str 括号
+         * @param left 左括号个数
+         * @param right 右括号个数
+         * @param res 结果集
+         */
+        private static void getParenthesis(String str, int left, int right,List<String> res) {
+            // 先写出递归的结束条件
+           if (left == 0 && right == 0){
+               res.add(str);
+               return;
+           }
+           // 若左右两个括号的数目相等，则先获取左括号；
+            if (left == right){
+                getParenthesis(str+"(",left-1,right,res);
+            }else if (left < right){
+                // 若左括号小于右括号的话则即可先获取左括号，也可先获取右括号
+                if (left > 0){
+                    // 继续先获取左括号
+                    getParenthesis(str+"(",left-1,right,res);
+                }
+                getParenthesis(str+")",left,right-1,res);
+            }
+        }
