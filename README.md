@@ -618,3 +618,62 @@ import java.util.Scanner;
                 getParenthesis(str+")",left,right-1,res);
             }
         }
+16 功能描述 原地删除有序数组中的重复项
+ *给你一个有序数组 nums ，请你 原地 删除重复出现的元素，使每个元素 只出现一次 ，返回删除后数组的新长度。
+ * 不要使用额外的数组空间，你必须在 原地 修改输入数组 并在使用 O(1) 额外空间的条件下完成。
+
+
+        public static void main(String[] args) {
+                int[] nums = {1, 1, 2,2,3,4,5,5,6};
+                int i = removeDuplicates(nums);
+                System.out.println(Arrays.toString(nums));
+                System.out.println(i);
+            }
+ 
+         private static int removeDuplicates(int[] nums){
+                int n = nums.length;
+                if (n == 0) {
+                    return 0;
+                }
+
+                // 快指针扫描，满指针标记覆盖位置 
+                int fast = 1, slow = 1;
+                while (fast < n) {
+                    if (nums[fast] != nums[fast - 1]) {
+                        nums[slow] = nums[fast];
+                        ++slow;
+                    }
+                    ++fast;
+                }
+                return slow;
+            }
+            
+17  功能描述 移除元素
+ * 给你一个数组 nums 和一个值 val，你需要 原地 移除所有数值等于 val 的元素，并返回移除后数组的新长度
+ *（元素的顺序可以改变。你不需要考虑数组中超出新长度后面的元素。）     
+ 
+        public static void main(String[] args) {
+            int[] nums = {0,1,2,2,3,0,4,2};
+            int i = removeElement(nums,2);
+            System.out.println(Arrays.toString(nums));
+            System.out.println(i);
+        }
+
+
+        private static int removeElement(int[] nums, int val){
+            int length = nums.length;
+            if (length == 0){
+                return 0;
+            }
+
+            int fast = 0;
+            int slow = 0;
+            while (fast < length){
+                if (nums[fast] != val){
+                    nums[slow] = nums[fast];
+                    ++slow;
+                }
+                ++fast;
+            }
+            return slow;
+        }
