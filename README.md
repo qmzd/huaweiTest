@@ -847,6 +847,7 @@ import java.util.Scanner;
 
             }
 22. 功能描述 搜索旋转排序数组
+    给你 旋转后 的数组 nums 和一个整数 target ，如果 nums 中存在这个目标值 target ，则返回它的下标，否则返回 -1 。
  * <p>
  * 题目要求 O(logN)O(logN) 的时间复杂度，基本可以断定本题是需要使用二分查找，怎么分是关键。
  * 由于题目说数字了无重复，举个例子：
@@ -901,60 +902,82 @@ import java.util.Scanner;
                 }
                 return -1;
             }
-23 /**
-     * 功能描述 搜索旋转排序数组
-     * <p>
-     * 题目要求 O(logN)O(logN) 的时间复杂度，基本可以断定本题是需要使用二分查找，怎么分是关键。
-     * 由于题目说数字了无重复，举个例子：
-     * 1 2 3 4 5 6 7 可以大致分为两类，
-     * 第一类 2 3 4 5 6 7 1 这种，也就是 nums[start] <= nums[mid]。此例子中就是 2 <= 5。
-     * 这种情况下，前半部分有序。因此如果 nums[start] <=target<nums[mid]，则在前半部分找，否则去后半部分找。
-     * 第二类 6 7 1 2 3 4 5 这种，也就是 nums[start] > nums[mid]。此例子中就是 6 > 2。
-     * 这种情况下，后半部分有序。因此如果 nums[mid] <target<=nums[end]，则在后半部分找，否则去前半部分找。
-    
+
+23  * 功能描述 寻找旋转排序数组中的最小值
+ *
+ * 已知一个长度为 n 的数组，预先按照升序排列，经由 1 到 n 次 旋转 后，得到输入数组。例如，原数组 nums = [0,1,2,4,5,6,7] 在变化后可能得到：
+ * 若旋转 4 次，则可以得到 [4,5,6,7,0,1,2]
+ * 若旋转 7 次，则可以得到 [0,1,2,4,5,6,7]
+ * 注意，数组 [a[0], a[1], a[2], ..., a[n-1]] 旋转一次 的结果为数组 [a[n-1], a[0], a[1], a[2], ..., a[n-2]] 。
+ * 给你一个元素值 互不相同 的数组 nums ，它原来是一个升序排列的数组，并按上述情形进行了多次旋转。请你找出并返回数组中的 最小元素 。
+ *
+ * 输入：nums = [4,5,6,7,0,1,2]
+ * 输出：0
+ * 解释：原数组为 [0,1,2,4,5,6,7] ，旋转 4 次得到输入数组。
+ *
+ * 输入：nums = [11,13,15,17]
+ * 输出：11
+ * 解释：原数组为 [11,13,15,17] ，旋转 4 次得到输入数组。
+                                                                      
             public static void main(String[] args) {
-                int[] nums = {4, 5, 6, 7, 0, 1, 2};
-                int target = 0;
-                int search = search(nums, target);
-                System.out.println(search);
+                int[] nums = {11, 13, 15, 17};
+                int min = findMin(nums);
+                System.out.println(min);
             }
 
-
-            private static int search(int[] nums, int target) {
-                if (nums == null || nums.length == 0) {
-                    return -1;
+            private static int findMin(int[] nums){
+                int length = nums.length;
+                if (length == 0){
+                    return Integer.MAX_VALUE;
                 }
+
                 int start = 0;
-                int end = nums.length - 1;
+                int end = length-1;
                 int mid = 0;
-                while (start <= end) {
-                    // 1.找到中点，
-                    mid = start + (end - start) / 2;
-                    if (nums[mid] == target){
-                        return mid;
-                    }
-                    // 先根据nums[mid] 和 nums[start] 的关系，判断出 mid在左段。还是右段；
-                    if (nums[mid] >= nums[start]){
-                        // 第一类 2 3 4 5 6 7 1 这种，也就是 nums[start] <= nums[mid]。此例子中就是 2 <= 5。
-                        // 种情况下，前半部分有序。因此如果 nums[start] <=target<nums[mid]，则在前半部分找，否则去后半部分找。
-                        if (target >= nums[start] && target < nums[mid]){
-                            end = mid - 1;
-                        }else {
-                            // 右半段有序，在右半段中找；
-                            start = mid + 1;
-                        }
-
+                while (start <= mid){
+                    // 1. 找到中点
+                    mid = start +(end - start)/2;
+                    // 若中间值小于最右边的值，则说明最右边是联系的，所以，最小值应该在最左边；
+                    // 将中间值赋予end ，在[nums[start],nums[mid])中查找最小值；
+                    if (nums[mid] < nums[end]){
+                       end = mid;
                     }else {
-                        // 第二类 6 7 1 2 3 4 5 这种，也就是 nums[start] > nums[mid]。此例子中就是 6 > 2。
-                        // * 这种情况下，后半部分有序。因此如果 nums[mid] <target<=nums[end]，则在后半部分找，否则去前半部分找。
-                        if (target > nums[mid] && target <= nums[end]){
-                            start = mid + 1;
-                        }else {
-                            end = mid - 1;
-                        }
-
+                        // 若中间值大于最右边的值，则说明最左边是联系的，所以，最小值应该在最右边；
+                        start = mid + 1;
                     }
+
                 }
-                return -1;
-            }
-    
+                return nums[end];
+            }    
+                                               
+24  *  功能描述
+         *
+         * 给定一个排序数组和一个目标值，在数组中找到目标值，并返回其索引。如果目标值不存在于数组中，返回它将会被按顺序插入的位置。
+         *
+         * 请必须使用时间复杂度为 O(log n) 的算法。   
+                                               
+       public static void main(String[] args) {
+        int[] nums = {1, 3, 5, 6};
+        int target = 7;
+        int i = searchInsert(nums, target);
+        System.out.println(i);
+    }
+
+    private static int searchInsert(int[] nums ,int target){
+        int length = nums.length;
+        int start = 0;
+        int end = length - 1;
+        int mid = 0;
+        int ans = length;
+        while (start <= end){
+            mid = start +  (end - start) / 2;
+           if (target <= nums[mid]){
+               end = mid - 1;
+               ans = mid;
+           }else {
+               start = mid + 1;
+           }
+        }
+
+        return ans;
+    }                                      
