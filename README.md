@@ -901,3 +901,60 @@ import java.util.Scanner;
                 }
                 return -1;
             }
+23 /**
+     * 功能描述 搜索旋转排序数组
+     * <p>
+     * 题目要求 O(logN)O(logN) 的时间复杂度，基本可以断定本题是需要使用二分查找，怎么分是关键。
+     * 由于题目说数字了无重复，举个例子：
+     * 1 2 3 4 5 6 7 可以大致分为两类，
+     * 第一类 2 3 4 5 6 7 1 这种，也就是 nums[start] <= nums[mid]。此例子中就是 2 <= 5。
+     * 这种情况下，前半部分有序。因此如果 nums[start] <=target<nums[mid]，则在前半部分找，否则去后半部分找。
+     * 第二类 6 7 1 2 3 4 5 这种，也就是 nums[start] > nums[mid]。此例子中就是 6 > 2。
+     * 这种情况下，后半部分有序。因此如果 nums[mid] <target<=nums[end]，则在后半部分找，否则去前半部分找。
+    
+            public static void main(String[] args) {
+                int[] nums = {4, 5, 6, 7, 0, 1, 2};
+                int target = 0;
+                int search = search(nums, target);
+                System.out.println(search);
+            }
+
+
+            private static int search(int[] nums, int target) {
+                if (nums == null || nums.length == 0) {
+                    return -1;
+                }
+                int start = 0;
+                int end = nums.length - 1;
+                int mid = 0;
+                while (start <= end) {
+                    // 1.找到中点，
+                    mid = start + (end - start) / 2;
+                    if (nums[mid] == target){
+                        return mid;
+                    }
+                    // 先根据nums[mid] 和 nums[start] 的关系，判断出 mid在左段。还是右段；
+                    if (nums[mid] >= nums[start]){
+                        // 第一类 2 3 4 5 6 7 1 这种，也就是 nums[start] <= nums[mid]。此例子中就是 2 <= 5。
+                        // 种情况下，前半部分有序。因此如果 nums[start] <=target<nums[mid]，则在前半部分找，否则去后半部分找。
+                        if (target >= nums[start] && target < nums[mid]){
+                            end = mid - 1;
+                        }else {
+                            // 右半段有序，在右半段中找；
+                            start = mid + 1;
+                        }
+
+                    }else {
+                        // 第二类 6 7 1 2 3 4 5 这种，也就是 nums[start] > nums[mid]。此例子中就是 6 > 2。
+                        // * 这种情况下，后半部分有序。因此如果 nums[mid] <target<=nums[end]，则在后半部分找，否则去前半部分找。
+                        if (target > nums[mid] && target <= nums[end]){
+                            start = mid + 1;
+                        }else {
+                            end = mid - 1;
+                        }
+
+                    }
+                }
+                return -1;
+            }
+    
