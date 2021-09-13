@@ -1073,3 +1073,88 @@ import java.util.Scanner;
                     return result;
                 }
     
+27   * 功能描述 给定一个数组 candidates 和一个目标数 target ，找出 candidates 中所有可以使数字和为 target 的组合。
+    * candidates 中的每个数字在每个组合中只能使用一次。
+     * 注意：解集不能包含重复的组合
+    
+   * 输入： candidates = [10,1,2,7,6,1,5], target = 8,
+    *  输出:
+    * [
+    * [1,1,6],
+    * [1,2,5],
+    * [1,7],
+    * [2,6]
+    * ]
+    
+    
+            public static void main(String[] args) {
+                int[] nums = new int[]{10,1,2,7,6,1,5};
+                int target = 8;
+                List<List<Integer>> lists = combinationSum2(nums, target);
+                System.out.println(lists);
+            }
+
+
+            public static List<List<Integer>> combinationSum2(int[] candidates,int target){
+                List<List<Integer>> result = new ArrayList<>();
+                List<Integer> path = new ArrayList<>();
+                Arrays.sort(candidates);
+                result = backtrack(path,candidates,target,0,0,result);
+                return result;
+            }
+
+            public static List<List<Integer>> backtrack(List<Integer> path, int[] candidates,int target,int begin,int sum,List<List<Integer>> result ){
+                if (sum == target){
+                    result.add(new ArrayList<>(path));
+                    return result;
+                }
+                for (int i = begin; i < candidates.length; i++) {
+                    if (i > begin && candidates[i] == candidates[i-1]){
+                        continue;
+                    }
+                    int re = sum + candidates[i];
+                    if (re <= target){
+                        path.add(candidates[i]);
+                        backtrack(path,candidates,target,i+1,re,result);
+                        path.remove(path.size() - 1);
+                    }else {
+                        break;
+                    }
+                }
+                return result;
+            }
+                                     
+28   * 功能描述
+ * 给你一个未排序的整数数组 nums ，请你找出其中没有出现的最小的正整数。
+ * 请你实现时间复杂度为 O(n) 并且只使用常数级别额外空间的解决方案。
+ * <p>
+ * 输入：nums = [1,2,0]
+ * 输出：3
+ * 示例 2：
+ * <p>
+ * 输入：nums = [3,4,-1,1]
+ * 输出：2
+    
+        public static void main(String[] args) {
+            int[] nums = new int[]{1,2,0};
+            int i = firstMissingPositive(nums);
+            System.out.println(i);
+        }
+
+        public static int firstMissingPositive(int[] nums) {
+            if (nums.length == 0) {
+                return 0;
+            }
+            int begin = 1;
+            Arrays.sort(nums);
+            for (int i = 0; i < nums.length; i++) {
+                if (nums[i] <= 0) {
+                    continue;
+                }
+                if (nums[i] != begin){
+                    return begin;
+                }
+                begin++;
+            }
+            return begin;
+        }
