@@ -1025,3 +1025,51 @@ import java.util.Scanner;
                     return result.toString();
                 }
             }           
+26  * 功能描述: 给定一个无重复元素的正整数数组candidates和一个正整数target，找出candidates中所有可以使数字和为目标数target的唯一组合。
+ * candidates 中的数字可以无限制重复被选取。如果至少一个所选数字数量不同，则两种组合是唯一的。
+ * 思路：递归
+ * 输入: candidates = [2,3,6,7], target = 7
+ * 输出: [[7],[2,2,3]]
+ * <p>
+ * 输入: candidates = [2,3,5], target = 8
+ * 输出: [[2,2,2,2],[2,3,3],[3,5]]
+    
+                public static void main(String[] args) {
+                    int[] nums = new int[]{2, 3, 5};
+                    int target = 8;
+                    List<List<Integer>> lists = combinationSum(nums, target);
+                    System.out.println(lists);
+                }
+
+                public static List<List<Integer>> combinationSum(int[] nums, int target) {
+                    List<List<Integer>> result = new ArrayList<>();
+
+                    ArrayList<Integer> path = new ArrayList<>();
+                    int length = nums.length;
+                    if (length == 0) {
+                        return result;
+                    }
+                    // 升序排序
+                    Arrays.sort(nums);
+                    result = backtrack(path, nums, target, 0, 0, result);
+                    return result;
+                }
+
+                public static List<List<Integer>> backtrack(List<Integer> path, int[] nums, int target, int sum, int begin, List<List<Integer>> result) {
+                    if (sum == target) {
+                        result.add(new ArrayList<>(path));
+                        return result;
+                    }
+                    for (int i = begin; i < nums.length; i++) {
+                        int rs = nums[i] + sum;
+                        if (rs <= target) {
+                            path.add(nums[i]);
+                            backtrack(path, nums, target, rs, i, result);
+                            path.remove(path.size() - 1);
+                        } else {
+                            break;
+                        }
+                    }
+                    return result;
+                }
+    
